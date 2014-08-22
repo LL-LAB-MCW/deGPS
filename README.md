@@ -7,6 +7,7 @@
 |**Suggests** | LPE, limma, edgeR |
 |**License** | GPL-2 |
 | **Binary source** | <a href="https://github.com/LL-LAB-MCW/deGPS-source-file/blob/master/deGPS_1.0.zip?raw=true"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/githublogo.png"></a> <a href="https://degps-rna-seq.googlecode.com/svn/deGPS_1.0.zip"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/Google-logo.png"></a>  |
+| **Mac source** | <a href="https://github.com/LL-LAB-MCW/deGPS-source-file/blob/master/deGPS_1.0.tgz?raw=true"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/githublogo.png"></a> <a href="https://degps-rna-seq.googlecode.com/svn/deGPS_1.0.tgz"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/Google-logo.png"></a>  |
 | **Source** | <a href="https://github.com/LL-LAB-MCW/deGPS-source-file/blob/master/deGPS.linux_1.0.tar.gz?raw=true"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/githublogo.png"></a> <a href="https://degps-rna-seq.googlecode.com/svn/deGPS.linux_1.0.tar.gz"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/Google-logo.png"></a>  |
 | **Manual** | <a href="https://github.com/LL-LAB-MCW/deGPS-source-file/blob/master/deGPS-manual.pdf?raw=true"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/githublogo.png"></a> <a href="https://degps-rna-seq.googlecode.com/svn/deGPS-manual.rar"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/Google-logo.png"></a>  |
 | **Following sessions**| **Installation, Details, FAQs, Contact, Reference**|
@@ -83,6 +84,10 @@ Please do not hesitate to contact the author if you have any questions or find a
  Comprehensive simulations of comparisons have been conducted and the results are presented in our article. The R codes for real data based and **compcodeR** simulated data based  simulation can be found in the supplementary of our article.
 
 ##FAQs
+- **Q0**: Of almost the same numbers of genes, why does **deGPS** cost minutes for one data set but hours for another?
+ 
+ **A0**: If you specify the same number of cpu cores for the two data sets, the problem may be caused by the different functions applied for the two sets in calculating p values. If the length of empirical T stats is larger than 1e7, a revised calculation function is applied. The threshold of 1e7 is determined to ensure both the preciseness and the efficiency of the calculation. However, it may take hours to finish the p value calculations for shorter empirical T stats (about 5e6 ~ 1e7) with just one cpu core. To speed up this step, one can specify **ncpu > 1** in **GPSmle** for miRNA or **nSubcore > 1 & ncore > 1** in **deGPS_mRNA** for mRNA.
+
 - **Q1**: There are errors occurred when running **deGPS**, why DOES NOT it stop?
  
  **A1**: R function **try** is introduced in the source codes of **deGPS**, e.g.:
