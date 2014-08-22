@@ -1,0 +1,4 @@
+import(foreach, doParallel)
+export(GPSmle, GPSmle.default, GPSmleEst, deGPS_mRNA, newExampleData, topTags)
+S3method(plot, GPSmle)
+S3method(summary, GPSmle)
