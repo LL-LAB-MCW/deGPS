@@ -602,9 +602,7 @@ StatAllArray <- NULL
 pValueAll1 <- NULL
 }
 
-log2FC <- apply(data / rep(apply(data, 2, mean, na.rm = TRUE), each = nrow(data)), 1, function(x) log2(mean(x[group == 2], na.rm = TRUE) / mean(x[group == 1], na.rm = TRUE)))
-log2FC[sum(data[ , group == 1]) == 0] <- Inf
-log2FC[sum(data[ , group == 1]) == 0 && sum(data[ , group == 2]) == 0] <- 0
+log2FC <- apply(data, 1, function(x) log2(mean(x[group == 2], na.rm = TRUE) / mean(x[group == 1], na.rm = TRUE)))
 
 method[method == "GP"] <- "GP-Quantile"
 method[method == "GP2"] <- "GP-Theta"
@@ -971,10 +969,7 @@ group = group, method = method, nSubcore = nSubcore, ncore = ncore, paired = pai
 pValueAll1 <- mRnaEcdfRes1$pvalue
 StatAllArray <- mRnaEcdfRes1$StatAllArray
 
-log2FC <- apply(data / rep(apply(data, 2, mean, na.rm = TRUE), each = nrow(data)), 1, function(x) log2(mean(x[group == 2], na.rm = TRUE) / mean(x[group == 1], na.rm = TRUE)))
-log2FC[sum(data[ , group == 1]) == 0] <- Inf
-log2FC[sum(data[ , group == 1]) == 0 && sum(data[ , group == 2]) == 0] <- 0
-
+log2FC <- apply(data, 1, function(x) log2(mean(x[group == 2], na.rm = TRUE) / mean(x[group == 1], na.rm = TRUE)))
 names(StatAllArray)[names(StatAllArray) == "GP"] <- "GP-Quantile"
 names(StatAllArray)[names(StatAllArray) == "GP2"] <- "GP-Theta"
 
