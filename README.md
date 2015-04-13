@@ -59,6 +59,7 @@ Please do not hesitate to contact the author if you have any question or find an
  ```
 
 - ** Revolution R Open Linux User**
+
   Currently the library `devtools` might disfunctions in some version(8.x), hence you might run the following code from terminal. A google group has mentioned that and here is the solution. (Make sure you have `git` installed)
 
 ```bash
