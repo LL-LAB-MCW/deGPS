@@ -10,20 +10,23 @@
 | **Mac** | <a href="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/old%20sources/deGPS_1.0.tgz"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/githublogo.png"></a> <a href="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/old%20sources/deGPS_1.0.tgz"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/Google-logo.png"></a>  |
 | **Linux** | <a href="https://github.com/LL-LAB-MCW/deGPS-source-file/blob/master/deGPS_2.0.tar.gz?raw=true"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/githublogo.png"></a> <a href="https://degps-rna-seq.googlecode.com/svn/deGPS_2.0.tar.gz"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/Google-logo.png"></a>  |
 | **Manual** | <a href="https://github.com/LL-LAB-MCW/deGPS-source-file/blob/master/deGPS-manual.pdf?raw=true"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/githublogo.png"></a> <a href="https://degps-rna-seq.googlecode.com/svn/deGPS-manual.rar"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/Google-logo.png"></a>  |
-| **Following sessions**| **Installation, Details, FAQs, Contact, Reference**|
 
-This package is proposed to analyze RNA-seq data in two steps: normalization and permutation-based differential expression test. 
+<hr>
+## Installation, Details, FAQs, Contact, Reference
+<hr>
 
-The permutation step may become time-consuming in large sample size context or in mRNA read count data analysis. Parallel computation is introduced in the main functions to deal with the computational burden. Note that in situations where parallel computation is not necessary, to force parallelization may result in more run time.
+This package is proposed to *analyze RNA-seq data in two steps: normalization and permutation-based differential expression test*. 
 
-Note that deGPS can only handle DE tests between two groups, but the novel GP-based normalization methods can be applied on any RNA-seq data. More Details about the GP-based normalization method and the advantages and limitations of our DE test can be found in our article.
+The **permutation step** may become time-consuming in large sample size context or in mRNA read count data analysis. Parallel computation is introduced in the main functions to deal with the computational burden. Note that in situations where parallel computation is not necessary, to force parallelization may result in more run time.
 
-The package also contains function to generate GP distributed data to be an example of RNA-seq data. It has to be pointed out that the simulated data in this package is FAR AWAY from real RNA-seq data, it is just simple GP distributed samples. For more appropriately simulated RNA-seq, **compcodeR** package is suggested, or, alternatively, you can generate H0 and H1 data from real data. Simple examples are given in the manual. More R codes referring to the real data based simulation or **compcodeR** based simulation can be found in the supplementary materials of our article.
+Note that deGPS can **only** handle DE tests between two groups, but the novel GP-based normalization methods can be applied on **any** RNA-seq data. More Details about the GP-based normalization method and the advantages and limitations of our DE test can be found in our manuscipt.
 
-Please do not hesitate to contact the author if you have any questions or find any flaws in the package.
+The package also contains function to generate GP distributed data to be an example of RNA-seq data. It has to be pointed out that the simulated data in this package is *FAR AWAY* from real RNA-seq data, it is just simple GP distributed samples. For more appropriately simulated RNA-seq, `compcodeR` package is suggested, or, alternatively, you can generate data under null and alternative hypotheses from real data. Simple examples are illustrated in the manual. More R codes referring to the real data based simulation or `compcodeR` based simulation can be found in the supplementary materials of our submitted paper.
 
-##Installation
-####deGPS
+Please do not hesitate to contact the author if you have any question or find any flaws in the package.
+
+### Installation
+#### deGPS
 - **Pre-installation**
   ```r
   source("http://bioconductor.org/biocLite.R")
@@ -55,11 +58,26 @@ Please do not hesitate to contact the author if you have any questions or find a
   R CMD INSTALL -l your_R_library_path_in_linux deGPS.linux_1.0.tar.gz
  ```
 
+- ** Revolution R Open Linux User**
+  Currently the library `devtools` might disfunctions in some version(8.x), hence you might run the following code from terminal. A google group has mentioned that and here is the solution. (Make sure you have `git` installed)
+
+```bash
+cd `R RHOME`
+sudo wget https://raw.githubusercontent.com/RevolutionAnalytics/RRO/master/R-src/etc/repositories
+cd ~/
+R -e "source('http://bioconductor.org/biocLite.R');biocLite(c('impute','LPE','limma','edgeR'))"
+git clone https://github.com/LL-LAB-MCW/deGPS.git
+R CMD INSTALL deGPS 
+rm -rf deGPS
+```
+
+The 
+
 ####Dependency
- ```
+ ```r
   ### Depends
-  install.packages(c("foreach", "doParallel"))    ## Windows
-  install.packages(c("parallel", "doParallel"))   ## Linux 
+  install.packages(c("foreach", "doParallel"))    ## Windows/linux/Mac
+  #install.packages(c("parallel", "doParallel"))   ## version 2 merged the requirment to one.
   
   ### Suggests
   source("http://bioconductor.org/biocLite.R")
