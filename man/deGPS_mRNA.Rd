@@ -9,7 +9,7 @@ Normalization and Two-group Differential Expression Test for mRNA Read Count Dat
 \usage{
 deGPS_mRNA(data, dataNormal = NULL, empirical.T.stats = NULL, 
 group = rep(1:2, each = 5), method = "GP-Theta", nSubcore = 4, 
-ncore = 4, paired = FALSE, maxIter = 150, geneid = NULL)
+ncore = 4, paired = FALSE, regularized = FALSE, maxIter = 150, geneid = NULL)
 }
 \arguments{
   \item{data}{
@@ -35,6 +35,9 @@ The total cpu cores used for the calculations. The specified \code{ncore} can be
 }
   \item{paired}{
 The current version of deGPS only contain unpaired test.
+}
+  \item{regularized}{
+Wether regularized t stats are applied instead of traditional t stats. If TRUE, \code{sam.stat} function in package \code{st} will be applied to get empirical distribution.
 }
   \item{maxIter}{
 The default value of maxIter is 150. When sample size is large, instead of transversing every possible permutation, randomly shuffling is applied for \code{maxIter} times to obtain the empirical distributions. Larger \code{maxIter} costs longer run time. Note that \code{maxIter} is forced to be not larger than \code{permutationTimes}.
