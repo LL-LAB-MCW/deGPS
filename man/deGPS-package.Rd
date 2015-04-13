@@ -22,11 +22,13 @@ Please do not hesitate to contact the author if you have any questions or find a
 \tabular{ll}{
 Package: \tab deGPS\cr
 Type: \tab Package\cr
-Version: \tab 1.0\cr
+Version: \tab 2.0\cr
 Date: \tab 2014-02-24\cr
 License: \tab GPL-2\cr
 }
 To do DE test for miRNA, call \link{GPSmle}. To do DE test for mRNA, call \link{deGPS_mRNA}. If only the normalization step is required, call \link{GPSmle} and specify \code{type} as "normalization". 
+
+Version 2.0 includes \code{sam.stat} in package \code{st} in \link{deGPS_mRNA} to get empirical t distribution instead of traditional t stats.
 
 Some denotations used in this manual are as follow:
 \itemize{
