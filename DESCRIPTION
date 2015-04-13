@@ -10,5 +10,3 @@ Depends: R (>= 3.0.0), foreach, doParallel, st, samr
 Suggests: LPE, limma, edgeR, compcodeR
 Description: Use methods based on Generalized Poisson Distribution to do RNA-seq differential expression tests.
 License: GPL-2
-Encoding: latin1
-Packaged: 2015-04-13 03:05:59 UTC; Yifan Yang
