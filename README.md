@@ -28,13 +28,17 @@ Please do not hesitate to contact the author if you have any questions or find a
  ```
   install.packages("devtools")
   library(devtools)
+  source("http://bioconductor.org/biocLite.R")
+  biocLite(c("impute","LPE","limma","edgeR"))  ## samr uses impute
   install_github("LL-LAB-MCW/deGPS")           ## Windows
-  install_github("LL-LAB-MCW/deGPS.linux")     ## Linux
+  #install_github("LL-LAB-MCW/deGPS.linux")    ## Linux merged to this vesion
  ```
 
 - **via source (Windows)**
  ```
   install.packages("yourZipFilePath\\deGPS_1.0.zip")  ## change '\' into '\\' in windows path
+  # or 
+  install.packages("Your-Folder-Pathto\\deGPS", repos = NULL, type="source")
  ```
 
  Or you can click the menu of Rgui:
@@ -51,7 +55,7 @@ Please do not hesitate to contact the author if you have any questions or find a
  ```
   ### Depends
   install.packages(c("foreach", "doParallel"))    ## Windows
-  install.packages(c("parallel", "doParallel"))   ## Linux
+  install.packages(c("parallel", "doParallel"))   ## Linux 
   
   ### Suggests
   source("http://bioconductor.org/biocLite.R")
