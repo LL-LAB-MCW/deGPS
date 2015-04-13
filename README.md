@@ -60,21 +60,23 @@ Please do not hesitate to contact the author if you have any question or find an
 
 - **Revolution R Open Linux User**
 
-  Currently the library `devtools` might disfunctions in some version(8.x), hence you might run the following code from terminal. A google group has mentioned that and here is the solution. (Make sure you have `git` installed)
+  Unluckly, Revolution R now may fail on install ANY bioconductor package due to a config file missing problem. Also, currently the library `devtools` might disfunctions in some version(8.x), hence you might run the following code from terminal. A [google group](https://groups.google.com/forum/#!topic/rropen/sJRJE9khzuw) has mentioned that and here is the solution. (Make sure you have `git` installed)
  
  ```bash
  cd `R RHOME`
  sudo wget https://raw.githubusercontent.com/RevolutionAnalytics/RRO/master/R-src/etc/repositories
  cd ~/
  R -e "source('http://bioconductor.org/biocLite.R');biocLite(c('impute','LPE','limma','edgeR'))"
+ R -e "install.package(c('foreach','doParallel','st','samr'))"
  git clone https://github.com/LL-LAB-MCW/deGPS.git
  R CMD INSTALL deGPS 
  rm -rf deGPS
  ```
 
-The 
-
 ####Dependency
+
+Version 2 users don't need to install different package for different platform. The package now is coss-platform.
+
  ```r
   ### Depends
   install.packages(c("foreach", "doParallel"))    ## Windows/linux/Mac
@@ -132,6 +134,8 @@ The
 - **Q3**: Why do you have two different sources for Windows and Linux?
  
  **A3**: Different packages are needed for parallel computation on the two platforms: **parallel** package on Linux and **foreach** for Windows. In practice, sometimes **foreach** fails to do parallelized jobs, instead it just do normal iterations on just one core. For more stable utilization, we choose the function **mcapply** in **parallel** on Linux.
+
+**Update**: Now `foreach` works on Windows/Linux/Mac(>=10.7) with R 3.1.x, please update your `foreach` package and enjoy deGPS 2.0 crossplatformly. The deep reason of failure of **foreach** may be complicated, which depends on your R BLAS setting and many others. As far as I know, if your BLAS uses multi-thread, such as [openblas](https://github.com/xianyi/OpenBLAS), **foreach** or **parallel** will have a great chance to use only one core with number of cores threads on Centos 6, Windows 7/8 and Mac (>=10.7). Please consult [R HPC](https://stat.ethz.ch/mailman/listinfo/r-sig-hpc) if you have further concerns.
  
  
 - **Q4**: Why hasn't your article been published or even accepted?
