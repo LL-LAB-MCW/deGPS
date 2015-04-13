@@ -1,14 +1,14 @@
 #deGPS 
 |  |            |
-| ------------- | ----------- |
-|**Version** | 1.0 |
+| ------------- |:----------- |
+|**Version** | 2.0 |
 |**Author** | Chen Chu |
 |**Depends** | R (>= 3.0.0), **foreach**, doParallel |
 |**Suggests** | LPE, limma, edgeR |
 |**License** | GPL-2 |
-| **Windows** | <a href="https://github.com/LL-LAB-MCW/deGPS-source-file/blob/master/deGPS_1.0.zip?raw=true"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/githublogo.png"></a> <a href="https://degps-rna-seq.googlecode.com/svn/deGPS_1.0.zip"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/Google-logo.png"></a>  |
-| **Mac** | <a href="https://github.com/LL-LAB-MCW/deGPS-source-file/blob/master/deGPS_1.0.tgz?raw=true"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/githublogo.png"></a> <a href="https://degps-rna-seq.googlecode.com/svn/deGPS_1.0.tgz"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/Google-logo.png"></a>  |
-| **Linux** | <a href="https://github.com/LL-LAB-MCW/deGPS-source-file/blob/master/deGPS.linux_1.0.tar.gz?raw=true"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/githublogo.png"></a> <a href="https://degps-rna-seq.googlecode.com/svn/deGPS.linux_1.0.tar.gz"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/Google-logo.png"></a>  |
+| **Windows** | <a href="https://github.com/LL-LAB-MCW/deGPS-source-file/blob/master/deGPS_2.0.zip?raw=true"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/githublogo.png"></a> <a href="https://degps-rna-seq.googlecode.com/svn/deGPS_2.0.zip"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/Google-logo.png"></a>  |
+| **Mac** | <a href="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/old%20sources/deGPS_1.0.tgz"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/githublogo.png"></a> <a href="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/old%20sources/deGPS_1.0.tgz"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/Google-logo.png"></a>  |
+| **Linux** | <a href="https://github.com/LL-LAB-MCW/deGPS-source-file/blob/master/deGPS_2.0.tar.gz?raw=true"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/githublogo.png"></a> <a href="https://degps-rna-seq.googlecode.com/svn/deGPS_2.0.tar.gz"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/Google-logo.png"></a>  |
 | **Manual** | <a href="https://github.com/LL-LAB-MCW/deGPS-source-file/blob/master/deGPS-manual.pdf?raw=true"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/githublogo.png"></a> <a href="https://degps-rna-seq.googlecode.com/svn/deGPS-manual.rar"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/Google-logo.png"></a>  |
 | **Following sessions**| **Installation, Details, FAQs, Contact, Reference**|
 
@@ -24,20 +24,24 @@ Please do not hesitate to contact the author if you have any questions or find a
 
 ##Installation
 ####deGPS
-- **via devtools**
- ```
-  install.packages("devtools")
-  library(devtools)
+- **Pre-installation**
+  ```r
   source("http://bioconductor.org/biocLite.R")
   biocLite(c("impute","LPE","limma","edgeR"))  ## samr uses impute
+  ```
+
+- **via devtools**
+ ```r
+  install.packages("devtools")
+  library(devtools)
   install_github("LL-LAB-MCW/deGPS")           ## Windows
   #install_github("LL-LAB-MCW/deGPS.linux")    ## Linux merged to this vesion
  ```
 
 - **via source (Windows)**
- ```
-  install.packages("yourZipFilePath\\deGPS_1.0.zip")  ## change '\' into '\\' in windows path
-  # or 
+ ```r
+  install.packages("yourZipFilePath\\deGPS_2.0.zip")  ## change '\' into '\\' in windows path
+  # or Preferred way
   install.packages("Your-Folder-Pathto\\deGPS", repos = NULL, type="source")
  ```
 
