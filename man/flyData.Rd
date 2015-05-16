@@ -68,6 +68,11 @@ flyRes <- deGPS_mRNA(data = simuData, group = group,
 ncore = 6, nSubcore = 6, method = "GP-Theta", 
 empirical.T.stats = empirical.T.stats.fly)
 
+### If you cannot download the RData on dropbox, please run following codes instead
+### flyRes <- deGPS_mRNA(data = simuData, group = group, 
+### ncore = 6, nSubcore = 6, method = "GP-Theta", 
+### empirical.T.stats = NULL)
+
 pvalue <- as.vector(flyRes$pvalue)
 
 ### compare result with edgeR and DESeq, DESeq2
