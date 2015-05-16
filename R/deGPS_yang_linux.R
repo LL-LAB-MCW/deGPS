@@ -839,7 +839,8 @@ normalFun_mRNA <- function(dataSim, method = c("Lowess", "GP", "Quantile", "TMM"
 ####################################Other Methods
 
 mRnaEcdfOther <- function(dataSim = dataSim, dataNormal = dataNormal, ecdf = NULL, group = rep(1:2, each = 5), method = "GP2", 
-                          nSubcore = 4, ncore = 4, paired = FALSE, maxIter = 150){
+                          nSubcore = 4, ncore = 4, paired = FALSE, maxIter = 150, 
+                          mixFDR = FALSE){
   
   method[method == "GP-Quantile"] <- "GP"
   method[method == "GP-Theta"] <- "GP2"
@@ -927,23 +928,31 @@ mRnaEcdfOther <- function(dataSim = dataSim, dataNormal = dataNormal, ecdf = NUL
   
   ##################Pvalue
   cat("Start calculating p values...  \n")
-  resAll <- NULL
-  
-  cl <- makeCluster(ncore)
-  registerDoParallel(cl)
-  
-  if(.Platform$OS.type == "windows"){
-    resAll <- foreach(i = 1:length(listIdx), .combine = c, .export = c("parFun2Other", "funRevisedP")) %dopar% parFun2Other(listIdx[[i]], dataNormal = dataNormal, ecdf = ecdfAll, dataSim = dataSim, fun3 = fun3, group = group)
+  if(mixFDR){
+    resAll <- lapply(ecdfAll, fdrtool, statistic = "normal", plot = FALSE)
+    pvalueAll <- matrix(1, nrow(dataSim), length(method))
+    for(i in 1:length(resAll)){
+      pvalueAll[ , i] <- resAll[[i]]$pval
+    }
   }else{
-    resAll <- do.call(c, mclapply(listIdx, parFun2Other, mc.cores = ncore, dataNormal = dataNormal, ecdf = ecdfAll, dataSim = dataSim, fun3 = fun3, group = group))
-  }
+    resAll <- NULL
+    
+    cl <- makeCluster(ncore)
+    registerDoParallel(cl)
+    
+    if(.Platform$OS.type == "windows"){
+      resAll <- foreach(i = 1:length(listIdx), .combine = c, .export = c("parFun2Other", "funRevisedP")) %dopar% parFun2Other(listIdx[[i]], dataNormal = dataNormal, ecdf = ecdfAll, dataSim = dataSim, fun3 = fun3, group = group)
+    }else{
+      resAll <- do.call(c, mclapply(listIdx, parFun2Other, mc.cores = ncore, dataNormal = dataNormal, ecdf = ecdfAll, dataSim = dataSim, fun3 = fun3, group = group))
+    }
+    
+    stopCluster(cl)
   
-  stopCluster(cl)
-  
-  pvalueAll <- matrix(1, nrow(dataSim), length(method))
-  for(i in 1:length(resAll)){
-    resTemp <- resAll[[i]]
-    pvalueAll[resTemp$idx$beginID:resTemp$idx$endID, resTemp$idx$sampleID] <- resTemp$pvalue
+    pvalueAll <- matrix(1, nrow(dataSim), length(method))
+    for(i in 1:length(resAll)){
+      resTemp <- resAll[[i]]
+      pvalueAll[resTemp$idx$beginID:resTemp$idx$endID, resTemp$idx$sampleID] <- resTemp$pvalue
+    }
   }
   pvalueAll <- as.matrix(pvalueAll)
   dimnames(pvalueAll) <- list(NULL, NULL)
@@ -954,7 +963,8 @@ mRnaEcdfOther <- function(dataSim = dataSim, dataNormal = dataNormal, ecdf = NUL
 ####### for regularized t stats
 
 mRnaEcdfOtherSamT <- function(dataSim = dataSim, dataNormal = dataNormal, ecdf = NULL, group = rep(1:2, each = 5), method = "GP2", 
-                              nSubcore = 4, ncore = 4, paired = FALSE, maxIter = 150){
+                              nSubcore = 4, ncore = 4, paired = FALSE, maxIter = 150, 
+                              mixFDR = FALSE){
   
   method[method == "GP-Quantile"] <- "GP"
   method[method == "GP-Theta"] <- "GP2"
@@ -1055,22 +1065,29 @@ mRnaEcdfOtherSamT <- function(dataSim = dataSim, dataNormal = dataNormal, ecdf =
   ##################Pvalue
   cat("Start calculating p values...  \n")
   resAll <- NULL
-  
-  cl <- makeCluster(ncore)
-  registerDoParallel(cl)
-  
-  if(.Platform$OS.type == "windows"){
-    resAll <- foreach(i = 1:length(listIdx), .combine = c, .export = c("parFun2OtherSamT", "funRevisedP")) %dopar% parFun2OtherSamT(listIdx[[i]], dataNormal = dataNormal, ecdf = ecdfAll, dataSim = dataSim, fun3 = fun3, group = group)
+  if(mixFDR){
+    resAll <- lapply(ecdfAll, fdrtool, statistic = "normal", plot = FALSE)
+    pvalueAll <- matrix(1, nrow(dataSim), length(method))
+    for(i in 1:length(resAll)){
+      pvalueAll[ , i] <- resAll[[i]]$pval
+    }
   }else{
-    resAll <- do.call(c, mclapply(listIdx, parFun2OtherSamT, mc.cores = ncore, dataNormal = dataNormal, ecdf = ecdfAll, dataSim = dataSim, fun3 = fun3, group = group))
-  }
-  
-  stopCluster(cl)
-  
-  pvalueAll <- matrix(1, nrow(dataSim), length(method))
-  for(i in 1:length(resAll)){
-    resTemp <- resAll[[i]]
-    pvalueAll[resTemp$idx$beginID:resTemp$idx$endID, resTemp$idx$sampleID] <- resTemp$pvalue
+    cl <- makeCluster(ncore)
+    registerDoParallel(cl)
+    
+    if(.Platform$OS.type == "windows"){
+      resAll <- foreach(i = 1:length(listIdx), .combine = c, .export = c("parFun2OtherSamT", "funRevisedP")) %dopar% parFun2OtherSamT(listIdx[[i]], dataNormal = dataNormal, ecdf = ecdfAll, dataSim = dataSim, fun3 = fun3, group = group)
+    }else{
+      resAll <- do.call(c, mclapply(listIdx, parFun2OtherSamT, mc.cores = ncore, dataNormal = dataNormal, ecdf = ecdfAll, dataSim = dataSim, fun3 = fun3, group = group))
+    }
+    
+    stopCluster(cl)
+    
+    pvalueAll <- matrix(1, nrow(dataSim), length(method))
+    for(i in 1:length(resAll)){
+      resTemp <- resAll[[i]]
+      pvalueAll[resTemp$idx$beginID:resTemp$idx$endID, resTemp$idx$sampleID] <- resTemp$pvalue
+    }
   }
   pvalueAll <- as.matrix(pvalueAll)
   dimnames(pvalueAll) <- list(NULL, NULL)
@@ -1084,7 +1101,8 @@ mRnaEcdfOtherSamT <- function(dataSim = dataSim, dataNormal = dataNormal, ecdf =
 ###########################################################################################
 deGPS_mRNA <- function(data, dataNormal = NULL, empirical.T.stats = NULL, group = rep(1:2, each = 5), 
                        method = "GP-Theta", nSubcore = 4, ncore = 4,
-                       paired = FALSE, regularized = FALSE, maxIter = 150, geneid = NULL){
+                       paired = FALSE, regularized = FALSE, mixFDR = FALSE, maxIter = 150, 
+                       geneid = NULL){
   
   method <- match.arg(method, c("GP-Theta", "Lowess", "GP-Quantile", "Quantile", "TMM"))
   
@@ -1095,7 +1113,10 @@ deGPS_mRNA <- function(data, dataNormal = NULL, empirical.T.stats = NULL, group 
   paired <- FALSE
   fun3 <- fun3_unpaired
   
-  if(regularized & length(method) > 1) stop("cannot apply regularized T stats on normalization methods other than GP-Theta.")
+  if((regularized | mixFDR) & length(method) > 1) stop("cannot apply regularized T stats on normalization methods other than GP-Theta.")
+  if(!regularized) warning("traditional t stats are used when option regularized is FALSE")
+  if(!mixFDR) warning("no adjustments made for pooled t stats when calculating p values as 
+                      option mixFDR is FALSE.")
   if(missing(group)) stop("group must be specified.")
   if(length(group) != ncol(data))stop("Length of group must equal to ncol of data.")
   if(length(table(group)) != 2) stop("There are more than two groups in the data.")
@@ -1118,9 +1139,9 @@ use as.matrix to make each replicate a column.")
   
   if(is.null(dataNormal))dataNormal <- normalFun_mRNA(data, method = method)
   if(regularized) mRnaEcdfRes1 <- mRnaEcdfOtherSamT(dataSim = data, dataNormal = dataNormal, ecdf = empirical.T.stats,
-                                                    group = group, method = method, nSubcore = nSubcore, ncore = ncore, paired = paired, maxIter = maxIter)
+                                                    group = group, method = method, nSubcore = nSubcore, ncore = ncore, paired = paired, maxIter = maxIter, mixFDR = mixFDR)
   else mRnaEcdfRes1 <- mRnaEcdfOther(dataSim = data, dataNormal = dataNormal, ecdf = empirical.T.stats,
-                                     group = group, method = method, nSubcore = nSubcore, ncore = ncore, paired = paired, maxIter = maxIter)
+                                     group = group, method = method, nSubcore = nSubcore, ncore = ncore, paired = paired, maxIter = maxIter, mixFDR = mixFDR)
   pValueAll1 <- mRnaEcdfRes1$pvalue
   StatAllArray <- mRnaEcdfRes1$StatAllArray
   

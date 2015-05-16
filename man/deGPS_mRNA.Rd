@@ -9,7 +9,7 @@ Normalization and Two-group Differential Expression Test for mRNA Read Count Dat
 \usage{
 deGPS_mRNA(data, dataNormal = NULL, empirical.T.stats = NULL, 
 group = rep(1:2, each = 5), method = "GP-Theta", nSubcore = 4, 
-ncore = 4, paired = FALSE, regularized = FALSE, maxIter = 150, geneid = NULL)
+ncore = 4, paired = FALSE, regularized = FALSE, mixFDR = FALSE, maxIter = 150, geneid = NULL)
 }
 \arguments{
   \item{data}{
@@ -39,6 +39,9 @@ The current version of deGPS only contain unpaired test.
   \item{regularized}{
 Wether regularized t stats are applied instead of traditional t stats. If TRUE, \code{sam.stat} function in package \code{st} will be applied to get empirical distribution.
 }
+  \item{mixFDR}{
+If TRUE, fdrtool is applied on original pooled T statistics to estimate the null empirical distribution and to get the p values.
+}
   \item{maxIter}{
 The default value of maxIter is 150. When sample size is large, instead of transversing every possible permutation, randomly shuffling is applied for \code{maxIter} times to obtain the empirical distributions. Larger \code{maxIter} costs longer run time. Note that \code{maxIter} is forced to be not larger than \code{permutationTimes}.
 }
@@ -51,7 +54,7 @@ This function is to analysis mRNA gene-level read count data in two steps: nomal
 
 More than one normalization method can be specified in one run, method \code{GP-Theta} is suggested. 
 
-In permutation DE test, p values are calculated according to the empirical T statistics obtained by randomly shuffling the samples. You can also specify your own empirical T-stats (or the one you get from another run of the function, which is useful in real data based simulations) in argument \code{empirical.T.stats}. 
+In permutation DE test, p values are calculated according to the empirical T statistics obtained by randomly shuffling the samples. You can also specify your own empirical T-stats (or the one you get from another run of the function, which is useful in real data based simulations) in argument \code{empirical.T.stats}. Note that regularized T stats can be used instead of traditional T stats when \code{regularized} is TRUE. Also \{fdrtool} function in package \code{fdrtool} can be applied on original pooled T stats to estimate the null empirical distribution when \code{mixFDR} is TRUE.
 
 To deal with the burden of computation, e.g. when SampleSize > 10, parallel computing is embeded in the function. By specify \code{nSubcore} and \code{ncore}, parallel computation is applied in the calculations. The abundant genes are divided into \code{nSubcore} subsets, for each of which the empirical T stats are therefore calculated parallelly. The calculation of p values are also parallelly applied on the subsets of mRNAs using empirical T stats obtained by binding \code{nSubcore} subsets. \code{nSubcore * nMethod} cores are needed in total, where \code{nMethod} represents the number of applied methods. 
 
