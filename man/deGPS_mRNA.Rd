@@ -40,7 +40,7 @@ The current version of deGPS only contain unpaired test.
 Wether regularized t stats are applied instead of traditional t stats. If TRUE, \code{sam.stat} function in package \code{st} will be applied to get empirical distribution.
 }
   \item{mixFDR}{
-If TRUE, fdrtool is applied on original pooled T statistics to estimate the null empirical distribution and to get the p values.
+If TRUE, fdrtool is applied on original pooled T statistics to estimate the null empirical distribution and to get the p values. Note that it may be time-consuming if mixFDR is TRUE, since no parallel computation is applied in the process.
 }
   \item{maxIter}{
 The default value of maxIter is 150. When sample size is large, instead of transversing every possible permutation, randomly shuffling is applied for \code{maxIter} times to obtain the empirical distributions. Larger \code{maxIter} costs longer run time. Note that \code{maxIter} is forced to be not larger than \code{permutationTimes}.
