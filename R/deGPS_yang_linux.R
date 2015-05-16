@@ -523,19 +523,10 @@ GPSmleEst <- function(data, group = rep(1:2, each = 5), type = c("normalization"
         
         cl <- makeCluster(ncpu)
         registerDoParallel(cl)
-        
-        if(.Platform$OS.type == "windows"){
-          StatAllArrayMLETemp <- foreach(i = 1:ncpu, .combine = c, .export = c("ecdfFun", "ecdfFunMulti", "fun3_unpaired", "listCat")) %dopar% 
+      ## use foreach 0
+       StatAllArrayMLETemp <- foreach(i = 1:ncpu, .combine = c, .export = c("ecdfFun", "ecdfFunMulti", "fun3_unpaired", "listCat")) %dopar% 
             ecdfFunMulti(x=i, maxIter = ceiling(maxIter / ncpu), dataNormal = dataNormal, method = method, group = group, paired = paired, combAllTotal = combAllTotal,
                          combAllTotal2 = combAllTotal2, lengthCombTotal = lengthCombTotal)
-          
-        }else{
-          maxIterTemp <- ceiling(maxIter / ncpu)
-          StatAllArrayMLETemp <- do.call(c, mclapply(1:ncpu, ecdfFunMulti, maxIter = maxIterTemp, dataNormal = dataNormal, method = method, group = group, paired = paired, combAllTotal = combAllTotal,
-                                                     combAllTotal2 = combAllTotal2, lengthCombTotal = lengthCombTotal, mc.cores = ncpu))
-          #cat(sum(StatAllArrayMLETemp[[1]] == StatAllArrayMLETemp[[2]]), "\n")
-          #str(StatAllArrayMLETemp)
-        }
         
         stopCluster(cl)
         
@@ -562,16 +553,15 @@ GPSmleEst <- function(data, group = rep(1:2, each = 5), type = c("normalization"
         cl <- makeCluster(ncpu)
         registerDoParallel(cl)
         
-        if(.Platform$OS.type == "windows"){
-          if(length(StatAllArray[[1]]) > 1e6) pValueAll1 <- foreach(i = 1:ncpu, .combine = c, .export = c("calPvalueFunRevised", "fun3_unpaired", "funRevisedP")) %dopar% calPvalueFunRevised(
+        # foreach 2
+          if(length(StatAllArray[[1]]) > 1e6){
+            pValueAll1 <- foreach(i = 1:ncpu, .combine = c, .export = c("calPvalueFunRevised", "fun3_unpaired", "funRevisedP")) %dopar% calPvalueFunRevised(
             dataNormal =  dataNormalTemp[[i]], StatAllArray = StatAllArray, method = method, group = group, paired = paired)
-          else pValueAll1 <- foreach(i = 1:ncpu, .combine = c, .export = c("calPvalueFun", "fun3_unpaired")) %dopar% calPvalueFun(
+          }else{
+            pValueAll1 <- foreach(i = 1:ncpu, .combine = c, .export = c("calPvalueFun", "fun3_unpaired")) %dopar% calPvalueFun(
             dataNormal = dataNormalTemp[[i]], StatAllArray = StatAllArray, method = method, group = group, paired = paired)
-        }else{
-          if(length(StatAllArray[[1]]) > 1e6) pValueTemp <- mclapply(1:ncpu, mc.cores = ncpu, function(x) calPvalueFunRevised(dataNormal =  dataNormalTemp[[x]], StatAllArray = StatAllArray, method = method, group = group, paired = paired))
-          else pValueTemp <- mclapply(1:ncpu, mc.cores = ncpu, function(x) calPvalueFun(dataNormal =  dataNormalTemp[[x]], StatAllArray = StatAllArray, method = method, group = group, paired = paired))
-          pValueAll1 <- do.call(c, pValueTemp)
-        }
+          }
+        
         pValueAll1 <- as.matrix(pValueAll1)
         dimnames(pValueAll1) <- list(NULL, method)
         stopCluster(cl)
@@ -901,12 +891,10 @@ mRnaEcdfOther <- function(dataSim = dataSim, dataNormal = dataNormal, ecdf = NUL
     cl <- makeCluster(ncore)
     registerDoParallel(cl)
     
-    if(.Platform$OS.type == "windows"){
+    # foreach 3
       resAll <- foreach(i = 1:length(listIdx), .combine = c, .export = c("parFun1Other")) %dopar% 
         parFun1Other(listIdx[[i]], dataNormal = dataNormal, dataSim = dataSim, combAll1 = combAll1, combAll2 = combAll2, fun3 = fun3, group = group)
-    }else{
-      resAll <- do.call(c, mclapply(listIdx, parFun1Other, mc.cores = ncore, dataNormal = dataNormal, dataSim = dataSim, combAll1 = combAll1, combAll2 = combAll2, fun3 = fun3, group = group))
-    }
+    
     
     stopCluster(cl)
     
@@ -932,11 +920,9 @@ mRnaEcdfOther <- function(dataSim = dataSim, dataNormal = dataNormal, ecdf = NUL
   cl <- makeCluster(ncore)
   registerDoParallel(cl)
   
-  if(.Platform$OS.type == "windows"){
+  #foreach 4
     resAll <- foreach(i = 1:length(listIdx), .combine = c, .export = c("parFun2Other", "funRevisedP")) %dopar% parFun2Other(listIdx[[i]], dataNormal = dataNormal, ecdf = ecdfAll, dataSim = dataSim, fun3 = fun3, group = group)
-  }else{
-    resAll <- do.call(c, mclapply(listIdx, parFun2Other, mc.cores = ncore, dataNormal = dataNormal, ecdf = ecdfAll, dataSim = dataSim, fun3 = fun3, group = group))
-  }
+  
   
   stopCluster(cl)
   
@@ -1059,11 +1045,8 @@ mRnaEcdfOtherSamT <- function(dataSim = dataSim, dataNormal = dataNormal, ecdf =
   cl <- makeCluster(ncore)
   registerDoParallel(cl)
   
-  if(.Platform$OS.type == "windows"){
+  #foreach 5
     resAll <- foreach(i = 1:length(listIdx), .combine = c, .export = c("parFun2OtherSamT", "funRevisedP")) %dopar% parFun2OtherSamT(listIdx[[i]], dataNormal = dataNormal, ecdf = ecdfAll, dataSim = dataSim, fun3 = fun3, group = group)
-  }else{
-    resAll <- do.call(c, mclapply(listIdx, parFun2OtherSamT, mc.cores = ncore, dataNormal = dataNormal, ecdf = ecdfAll, dataSim = dataSim, fun3 = fun3, group = group))
-  }
   
   stopCluster(cl)
   
