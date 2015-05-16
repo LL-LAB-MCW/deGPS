@@ -3,7 +3,7 @@
 | ------------- |:----------- |
 |**Version** | 2.0 |
 |**Author** | Chen Chu |
-|**Depends** | R (>= 3.0.0), **foreach**, doParallel, st, fdrtool |
+|**Depends** | R (>= 3.0.0), **foreach**, doParallel, st, samr, fdrtool |
 |**Suggests** | LPE, limma, edgeR, compcodeR |
 |**License** | GPL-2 |
 | **Windows** | <a href="https://github.com/LL-LAB-MCW/deGPS-source-file/blob/master/deGPS_2.0.zip?raw=true"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/githublogo.png"></a> <a href="https://degps-rna-seq.googlecode.com/svn/deGPS_2.0.zip"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/Google-logo.png"></a>  |
