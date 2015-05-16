@@ -3,8 +3,8 @@
 | ------------- |:----------- |
 |**Version** | 2.0 |
 |**Author** | Chen Chu |
-|**Depends** | R (>= 3.0.0), **foreach**, doParallel |
-|**Suggests** | LPE, limma, edgeR |
+|**Depends** | R (>= 3.0.0), **foreach**, doParallel, st, fdrtool |
+|**Suggests** | LPE, limma, edgeR, compcodeR |
 |**License** | GPL-2 |
 | **Windows** | <a href="https://github.com/LL-LAB-MCW/deGPS-source-file/blob/master/deGPS_2.0.zip?raw=true"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/githublogo.png"></a> <a href="https://degps-rna-seq.googlecode.com/svn/deGPS_2.0.zip"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/Google-logo.png"></a>  |
 | **Mac** | <a href="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/old%20sources/deGPS_1.0.tgz"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/githublogo.png"></a> <a href="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/old%20sources/deGPS_1.0.tgz"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/Google-logo.png"></a>  |
