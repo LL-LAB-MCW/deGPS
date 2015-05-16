@@ -1,4 +1,11 @@
-import(foreach, doParallel, st, fdrtool)
+import(doParallel)
+import(foreach)
+import(st)
+import(fdrtool)
+import(parallel)
+import(samr)
+import(limma, LPE, edgeR)
+
 export(GPSmle, GPSmle.default, GPSmleEst, deGPS_mRNA, newExampleData, topTags)
 S3method(plot, GPSmle)
 S3method(summary, GPSmle)

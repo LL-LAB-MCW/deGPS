@@ -3,7 +3,7 @@
 | ------------- |:----------- |
 |**Version** | 2.0 |
 |**Author** | Chen Chu |
-|**Depends** | R (>= 3.0.0), **foreach**, doParallel, st, samr, fdrtool |
+|**Depends** | R (>= 3.0.0), parallel, **foreach**, doParallel, st, samr, fdrtool |
 |**Suggests** | LPE, limma, edgeR, compcodeR |
 |**License** | GPL-2 |
 | **Windows** | <a href="https://github.com/LL-LAB-MCW/deGPS-source-file/blob/master/deGPS_2.0.zip?raw=true"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/githublogo.png"></a> <a href="https://degps-rna-seq.googlecode.com/svn/deGPS_2.0.zip"><img src="https://raw.githubusercontent.com/LL-LAB-MCW/deGPS-source-file/master/Google-logo.png"></a>  |
@@ -64,12 +64,13 @@ Please do not hesitate to contact the author if you have any question or find an
  
  ```bash
  cd `R RHOME`
+ cd etc/
  sudo wget https://raw.githubusercontent.com/RevolutionAnalytics/RRO/master/R-src/etc/repositories
  cd ~/
  R -e "source('http://bioconductor.org/biocLite.R');biocLite(c('impute','LPE','limma','edgeR'))"
- R -e "install.package(c('foreach','doParallel','st','samr'))"
+ R -e "install.packages(c('foreach','doParallel','st','samr'))"
  git clone https://github.com/LL-LAB-MCW/deGPS.git
- R CMD INSTALL deGPS 
+ R CMD INSTALL deGPS
  rm -rf deGPS
  ```
 
