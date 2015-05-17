@@ -922,10 +922,11 @@ mRnaEcdfOther <- function(dataSim = dataSim, dataNormal = dataNormal, ecdf = NUL
   ##################Pvalue
   cat("Start calculating p values...  \n")
   if(mixFDR){
-    resAll <- lapply(ecdfAll, fdrtool, statistic = "normal", plot = FALSE)
+    resAll <- lapply(ecdfAll, function(x) fdrtool(c(apply(dataNormal[[2]], 1, fun3_unpaired, group = group), x), 
+                                                  statistic = "normal", plot = FALSE))
     pvalueAll <- matrix(1, nrow(dataSim), length(method))
     for(i in 1:length(resAll)){
-      pvalueAll[ , i] <- resAll[[i]]$pval
+      pvalueAll[ , i] <- resAll[[i]]$pval[1:nrow(dataSim)]
     }
   }else{
     resAll <- NULL
@@ -1056,10 +1057,11 @@ mRnaEcdfOtherSamT <- function(dataSim = dataSim, dataNormal = dataNormal, ecdf =
   cat("Start calculating p values...  \n")
   resAll <- NULL
   if(mixFDR){
-    resAll <- lapply(ecdfAll, fdrtool, statistic = "normal", plot = FALSE)
+    resAll <- lapply(ecdfAll, function(x) fdrtool(c(sam.stat(t(dataNormal[[2]]), group), x), 
+                                                  statistic = "normal", plot = FALSE))
     pvalueAll <- matrix(1, nrow(dataSim), length(method))
     for(i in 1:length(resAll)){
-      pvalueAll[ , i] <- resAll[[i]]$pval
+      pvalueAll[ , i] <- resAll[[i]]$pval[1:nrow(dataSim)]
     }
   }else{
     cl <- makeCluster(ncore)
