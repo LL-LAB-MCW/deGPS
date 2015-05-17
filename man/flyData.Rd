@@ -76,14 +76,17 @@ empirical.T.stats = empirical.T.stats.fly)
 pvalue <- as.vector(flyRes$pvalue)
 
 ### compare result with edgeR and DESeq, DESeq2
+### note that the latest edgeR version request glmQLFit before applying glmQLFTest
+### while in old versions glmQLFTest can work directly on estimateGLMTrendedDisp result object
 
 d0 <- DGEList(counts = simuData, group = group)
 design <- model.matrix(~ group, data = d0$samples)
 d <- try(calcNormFactors(d0, method = "TMM"))
 d <- try(estimateGLMCommonDisp(d, design, verbose = TRUE))
 d <- try(estimateGLMTrendedDisp(d, design))
-efit <- try(glmQLFTest(d, design, coef = 2))
-edge2Res <- efit$table$PValue
+efit1 <- try(glmQLFit(d, design, coef = 2))
+efit2 <- try(glmQLFTest(efit1))
+edge2Res <- efit2$table$PValue
 
 d <- try(estimateGLMTagwiseDisp(d, design))
 efit <- try(glmFit(d, design))
