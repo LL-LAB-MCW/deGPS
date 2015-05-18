@@ -9,6 +9,7 @@ importFrom(LPE,quartile.normalize,lowess.normalize)
 importFrom(DESeq,newCountDataSet)
 importFrom(edgeR,calcNormFactors)
 importFrom(limma,normalizeBetweenArrays)
+importFrom(DESeq2,DESeqDataSetFromMatrix)
 
 export(GPSmle, GPSmle.default, GPSmleEst, deGPS_mRNA, newExampleData, toptags)
 S3method(plot, GPSmle)
