@@ -2,7 +2,7 @@
 
 ##################################################################################
 
-topTags <- function(x, n = 10, method = "BH", significance = 0.05){
+toptags <- function(x, n = 10, method = "BH", significance = 0.05){
   if(!("GPSmle" %in% class(x))) x <- list(pvalue = x)
   x$pvalue <- as.matrix(x$pvalue)
   if(ncol(x$pvalue) > 1) stop("multiple rows found in pvalues.")

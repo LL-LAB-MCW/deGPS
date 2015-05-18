@@ -72,7 +72,7 @@ examRes <- GPSmle(data = examData$data, group = examData$group, method = "GP-The
 type = "pvalue", ncpu = 1, geneid = paste("G", 1:100, sep = ""))
 str(examRes)
 
-topTags(examRes, n = 10, method = "BH")
+toptags(examRes, n = 10, method = "BH")
 
 plot(examRes)
 }

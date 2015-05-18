@@ -106,7 +106,7 @@ empirical.T.stats = empirical.T.stats.fly)
 
 pvalue <- as.vector(flyRes$pvalue)
 adj.p <- p.adjust(pvalue, method = "BH")
-topTags(pvalue)
+toptags(pvalue)
 
 ### Generate Random samples from GP(theta, lambda)
 examData <- newExampleData(nRNA = 100, groupSize = 6, lambda = 0.9, 

@@ -1,5 +1,5 @@
-\name{topTags}
-\alias{topTags}
+\name{toptags}
+\alias{toptags}
 \title{
 The top significant genes or miRs
 }
@@ -7,7 +7,7 @@ The top significant genes or miRs
 The top significant genes or miRs
 }
 \usage{
-topTags(x, n = 10, method = "BH", significance = 0.05)
+toptags(x, n = 10, method = "BH", significance = 0.05)
 }
 \arguments{
   \item{x}{
@@ -24,7 +24,7 @@ the significant level of the DE.
 }
 }
 \details{
-This function is to find the significant genes or miRs at the given significant level. If you want to call this function, make sure that \code{library(deGPS)} is called after other packages, such as \code{edgeR}, since those packages also contain function named \code{topTags}.
+This function is to find the significant genes or miRs at the given significant level. If you want to call this function, make sure that \code{library(deGPS)} is called after other packages, such as \code{edgeR}, since those packages also contain function named \code{toptags}.
 }
 \value{
 A list containing:

@@ -95,7 +95,7 @@ str(examData)
 examRes <- deGPS_mRNA(data = examData$data, group = examData$group, 
 method = "GP-Theta", nSubcore = 2, ncore = 2, geneid = paste("G", 1:100, sep = ""))
 str(examRes)
-topTags(examRes, n = 10, method = "BH")
+toptags(examRes, n = 10, method = "BH")
 
 ###Generate simulated RNA-seq data from compcodeR package
 require(compcodeR)
@@ -118,7 +118,7 @@ group <- examData@sample.annotations$condition
 examRes <- deGPS_mRNA(data = examData@count.matrix, group = group, 
 method = "GP-Theta", nSubcore = 6, ncore = 6, geneid = paste("G", 1:nrow(examData@count.matrix), sep = ""))
 str(examRes)
-topTags(examRes, n = 10, method = "BH")
+toptags(examRes, n = 10, method = "BH")
 
 }
 }
