@@ -922,22 +922,11 @@ mRnaEcdfOther <- function(dataSim = dataSim, dataNormal = dataNormal, ecdf = NUL
   ##################Pvalue
   cat("Start calculating p values...  \n")
   if(mixFDR){
-    tmpResRes <- apply(dataNormal[[2]], 1, fun3_unpaired, group = group)
+    resAll <- lapply(ecdfAll, function(x) fdrtool(c(apply(dataNormal[[2]], 1, fun3_unpaired, group = group), x), 
+                                                  statistic = "normal", plot = FALSE))
     pvalueAll <- matrix(1, nrow(dataSim), length(method))
-    resAll <- list()
-    for(i in 1:length(ecdfAll)){
-      cl <- makeCluster(ncore)
-      registerDoParallel(cl)
-      
-      # foreach 4  
-      resAll[[i]] <- foreach(j = 1:nrow(dataSim), .combine = c, .export = c("tmpResRes", "ecdfAll", "i", "fdrtool")) %dopar% fdrtool(c(tmpResRes[j], ecdfAll[[i]]), statistic = "normal", plot = FALSE)$pval[1]
-      
-      stopCluster(cl)
-      #for(j in 1:nrow(dataSim)){
-      #pvalueAll[j, i] <-  }
-    }
     for(i in 1:length(resAll)){
-      pvalueAll[ , i] <- resAll[[i]]
+      pvalueAll[ , i] <- resAll[[i]]$pval[1:nrow(dataSim)]
     }
   }else{
     resAll <- NULL
@@ -1066,23 +1055,13 @@ mRnaEcdfOtherSamT <- function(dataSim = dataSim, dataNormal = dataNormal, ecdf =
   
   ##################Pvalue
   cat("Start calculating p values...  \n")
-  resAll <- list()
+  resAll <- NULL
   if(mixFDR){
-    tmpResRes <- sam.stat(t(dataNormal[[2]]), group)
+    resAll <- lapply(ecdfAll, function(x) fdrtool(c(sam.stat(t(dataNormal[[2]]), group), x), 
+                                                  statistic = "normal", plot = FALSE))
     pvalueAll <- matrix(1, nrow(dataSim), length(method))
-    for(i in 1:length(ecdfAll)){
-      cl <- makeCluster(ncore)
-      registerDoParallel(cl)
-            
-      resAll[[i]] <- foreach(j = 1:nrow(dataSim), .combine = c, .export = c("ecdfAll", "tmpResRes", "fdrtool", "i")) %dopar% fdrtool(c(tmpResRes[j], ecdfAll[[i]]), statistic = "normal", plot = FALSE)$pval[1]
-      
-      stopCluster(cl)
-      #for(j in 1:nrow(dataSim)){
-      #  pvalueAll[j, i] <- 
-      #}
-    }
     for(i in 1:length(resAll)){
-      pvalueAll[, i] <- resAll[[i]]
+      pvalueAll[ , i] <- resAll[[i]]$pval[1:nrow(dataSim)]
     }
   }else{
     cl <- makeCluster(ncore)
