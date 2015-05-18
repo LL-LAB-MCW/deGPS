@@ -30,7 +30,7 @@ Please do not hesitate to contact the author if you have any question or find an
 - **Pre-installation**
   ```r
   source("http://bioconductor.org/biocLite.R")
-  biocLite(c("impute","LPE","limma","edgeR"))  ## samr uses impute
+  biocLite(c("impute","LPE","limma","edgeR","DESeq","DESeq2","compcodeR"))  ## samr uses impute
   ```
 
 - **via devtools**
