@@ -1068,7 +1068,7 @@ mRnaEcdfOtherSamT <- function(dataSim = dataSim, dataNormal = dataNormal, ecdf =
     registerDoParallel(cl)
     
     
-      resAll <- foreach(i = 1:length(listIdx), .combine = c, .export = c("parFun2OtherSamT", "funRevisedP")) %dopar% parFun2OtherSamT(listIdx[[i]], dataNormal = dataNormal, ecdf = ecdfAll, dataSim = dataSim, fun3 = fun3, group = group)
+      resAll <- foreach(i = 1:length(listIdx), .combine = c, .export = c("parFun2OtherSamT", "funRevisedP", "sam.stat")) %dopar% parFun2OtherSamT(listIdx[[i]], dataNormal = dataNormal, ecdf = ecdfAll, dataSim = dataSim, fun3 = fun3, group = group)
     
     stopCluster(cl)
     
